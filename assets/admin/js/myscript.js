@@ -659,6 +659,37 @@ if(admin_loader == 1)
     return false;
   });
 
+$('#confirm_product-delete').on('show.bs.modal', function(e) {
+    $(this).find('.delete-product').attr('action', $(e.relatedTarget).data('href'));
+  });
+  $('#confirm_product-delete .delete-product').on('submit', function(e) {
+    if(admin_loader == 1){
+      $('.submit-loader').show();
+    }
+    $.ajax({
+    method:"POST",
+    url:$(this).prop('action'),
+    data:new FormData(this),
+    dataType:'JSON',
+    contentType: false,
+    cache: false,
+    processData: false,
+    success:function(data)
+    {
+        $('#confirm_product-delete').modal('toggle');
+        $('#trendyoltable').DataTable().ajax.reload();
+        $('.alert-danger').hide();
+        $('.alert-success').show();
+        $('.alert-success p').html(data);
+        if(admin_loader == 1)
+        {
+          $('.submit-loader').hide();
+        }
+    }
+    });
+    return false;
+  });
+
       $('#confirm-delete .btn-ok').on('click', function(e) {
 
 if(admin_loader == 1)
@@ -913,7 +944,62 @@ $('button.addProductSubmit-btn').prop('disabled',true);
 });
 
 // NORMAL FORM ENDS
+// TRENDYOL PRODUCT FORM
 
+$(document).on('submit','#trendyolform',function(e){
+e.preventDefault();
+if(admin_loader == 1)
+  {
+$('.gocover').show();
+  }
+
+  var fd = new FormData(this);
+
+var trendyolform = $(this);
+$('button.addProductSubmit-btn').prop('disabled',true);
+    $.ajax({
+     method:"POST",
+     url:$(this).prop('action'),
+     data:fd,
+     contentType: false,
+     cache: false,
+     processData: false,
+     success:function(data)
+     {
+      
+        if ((data.errors)) {
+        trendyolform.parent().find('.alert-success').hide();
+        trendyolform.parent().find('.alert-danger').show();
+        trendyolform.parent().find('.alert-danger ul').html('');
+          for(var error in data.errors)
+          {
+            $('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>')
+          }
+          trendyolform.find('input , select , textarea').eq(1).focus();
+        }
+        else
+        {
+          trendyolform.parent().find('.alert-danger').hide();
+          trendyolform.parent().find('.alert-success').show();
+          trendyolform.parent().find('.alert-success p').html(data);
+          trendyolform.find('input , select , textarea').eq(1).focus();
+        }
+          if(admin_loader == 1){
+        $('.gocover').hide();
+          }
+
+        $('button.addProductSubmit-btn').prop('disabled',false);
+
+
+        $(window).scrollTop(0);
+
+     }
+
+    });
+
+});
+
+// NORMAL FORM ENDS
 
 
 // NORMAL FORM

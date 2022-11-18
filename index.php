@@ -27,7 +27,6 @@ define('LARAVEL_START', microtime(true));
 | into the script here so we don't need to manually load our classes.
 |
 */
-
 require __DIR__.'/project/vendor/autoload.php';
 
 /*

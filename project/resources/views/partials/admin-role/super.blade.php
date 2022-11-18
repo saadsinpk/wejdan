@@ -138,7 +138,9 @@
             </li>
         </ul>
     </li>
-
+    <li>
+        <a href="{{ route('trendyolProducts.index') }}" class=" wave-effect"><i class="icofont-cart"></i>{{ __('Trendyol') }}</a>
+    </li>
     <li>
         <a href="{{ route('admin-coupon-index') }}" class=" wave-effect"><i class="fas fa-percentage"></i>{{ __('Set Coupons') }}</a>
     </li>

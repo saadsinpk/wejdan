@@ -1619,3 +1619,9 @@ Route::post('/item/report', 'Front\CatalogController@report')->name('product.rep
   });
   Route::post('the/genius/ocean/2441139', 'Front\FrontendController@subscription');
   Route::get('finalize', 'Front\FrontendController@finalize');
+  
+  //Trendyol products controller 
+  Route::resource('admin/trendyolProducts', 'admin\trendyolProductsController');
+  Route::get('/trendyolProducts/datatables', 'admin\trendyolProductsController@datatables')->name('admin-trendyolProducts-datatables'); //JSON REQUEST
+  Route::get('/trendyolProducts/status/{id1}/{id2}', 'Admin\trendyolProductsController@status')->name('admin-trendyolProducts-status');
+  Route::delete('/trendyolProducts/delete/{id}', 'admin\trendyolProductsController@destroy')->name('admin-trendyolProducts-delete');
